@@ -2,22 +2,27 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import Spinner from '../../common/Spinner/Spinner';
 import Alert from '../../common/Alert/Alert';
-import PostsList from '../PostsList/PostsList';
+import HtmlBox from '../../common/HtmlBox/HtmlBox';
+import SmallTitle from '../../common/SmallTitle/SmallTitle';
+import { getPost } from '../../../redux/postsRedux';
 
-class Posts extends React.Component {
+class SinglePost extends React.Component {
 
 	componentDidMount() {
-		const { loadPosts } = this.props;
-		loadPosts();
+		const { loadPost} = this.props;
+		loadPost();
 	}
 
 	render() {
-		const { posts, request, postsNumber } = this.props;
-
-		if (request.pending === false && request.success === true && postsNumber > 0){
+		const { request, post} = this.props;
+		debugger;
+		if (request.pending === false && request.success === true){
 			return (
 				<div>
-					<PostsList posts={posts} />
+					<article className="post-summary">
+						<SmallTitle>{post.title}</SmallTitle>
+						<HtmlBox>{post.content}</HtmlBox>
+					</article>
 				</div>
 			);
 		} else if (request.pending === true && request.success === null) {
@@ -32,7 +37,7 @@ class Posts extends React.Component {
 					<Alert variant="error">{request.error}</Alert>
 				</div>
 			);
-		} else if (request.pending === false && request.success === true && postsNumber === 0) {
+		} else if (request.pending === false && request.success === true) {
 			return (
 				<div>
 					<Alert variant="info">No posts</Alert>
@@ -49,15 +54,15 @@ class Posts extends React.Component {
 
 };
 
-Posts.propTypes = {
-	posts: PropTypes.arrayOf(
+SinglePost.propTypes = {
+	post: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 			content: PropTypes.string.isRequired,
 		})
 	),
-	loadPosts: PropTypes.func.isRequired,
+	loadPost: PropTypes.func.isRequired,
 };
 
-export default Posts;
+export default SinglePost;
