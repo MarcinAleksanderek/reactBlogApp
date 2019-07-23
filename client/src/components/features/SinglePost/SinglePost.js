@@ -4,7 +4,6 @@ import Spinner from '../../common/Spinner/Spinner';
 import Alert from '../../common/Alert/Alert';
 import HtmlBox from '../../common/HtmlBox/HtmlBox';
 import SmallTitle from '../../common/SmallTitle/SmallTitle';
-import { getPost } from '../../../redux/postsRedux';
 
 class SinglePost extends React.Component {
 
@@ -15,8 +14,8 @@ class SinglePost extends React.Component {
 
 	render() {
 		const { request, post} = this.props;
-		debugger;
-		if (request.pending === false && request.success === true){
+		//debugger;
+		if (request.pending === false && request.success === true && post !== undefined){
 			return (
 				<div>
 					<article className="post-summary">
@@ -43,6 +42,12 @@ class SinglePost extends React.Component {
 					<Alert variant="info">No posts</Alert>
 				</div>
 			);
+		} else if (request.pending === false && request.success === true && post == undefined) {
+				return (
+					<div>
+						<Spinner />
+					</div>
+				);
 		} else {
 			return (
 				<div>

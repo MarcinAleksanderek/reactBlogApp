@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import Spinner from '../../common/Spinner/Spinner';
 import Alert from '../../common/Alert/Alert';
 import PostsList from '../PostsList/PostsList';
+import resetRequest from '../../../redux/postsRedux';
 
 class Posts extends React.Component {
 
@@ -10,6 +11,7 @@ class Posts extends React.Component {
 		const { loadPosts } = this.props;
 		loadPosts();
 	}
+
 
 	render() {
 		const { posts, request, postsNumber } = this.props;
@@ -53,6 +55,7 @@ Posts.propTypes = {
 	posts: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
+			author: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 			content: PropTypes.string.isRequired,
 		})
